@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "user", indexes = {
+@Table(name = "users", indexes = {
         @Index(name = "idx_username", columnList = "username"),
         @Index(name = "idx_email", columnList = "email")
 })

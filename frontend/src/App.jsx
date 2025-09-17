@@ -1,7 +1,13 @@
 import React from "react";
 
 const App = () => {
-  return <div className="bg-teal-100">App</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;
