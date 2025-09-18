@@ -8,6 +8,8 @@ import useAuthStore from "./store/authStore";
 const App = () => {
   const { isAuthenticated } = useAuthStore();
 
+  console.log(isAuthenticated);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +23,9 @@ const App = () => {
         />
         <Route
           path="/"
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+          element={
+            isAuthenticated ? <Home /> : <Navigate to="/login" replace />
+          }
         />
       </Routes>
     </BrowserRouter>
