@@ -52,10 +52,6 @@ const useAuthStore = create((set) => ({
       error: null,
     });
   },
-
-  checkAuth: () => {
-    set({ isAuthenticated: authService.isAuthenticated });
-  },
 }));
 
 export default useAuthStore;
