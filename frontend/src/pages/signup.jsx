@@ -8,7 +8,9 @@ import useAuthStore from "../store/authStore";
 
 const Signup = () => {
   const navigate = useNavigate();
+
   const { register, loading, error } = useAuthStore();
+
   const [formData, setFormData] = useState({
     email: "",
     fullName: "",
@@ -136,8 +138,6 @@ const Signup = () => {
           {error && (
             <p className="text-red-500 text-xs text-center mt-4">{error}</p>
           )}
-
-          {/* <p className="text-red-500 text-xs text-center mt-4">error</p> */}
         </div>
 
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl px-12 py-8 text-center">

@@ -82,7 +82,9 @@ const Login = () => {
             </Button>
           </form>
 
-          {/* <p className="text-red-500 text-xs text-center mt-4">error</p> */}
+          {error && (
+            <p className="text-red-500 text-xs text-center mt-4">error</p>
+          )}
 
           <div className="flex items-center my-8">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
@@ -91,14 +93,29 @@ const Login = () => {
           </div>
 
           <div className="space-y-4 mb-8">
-            <Button variant="secondary" icon={<FcGoogle className="w-6 h-6" />}>
+            <Button
+              variant="secondary"
+              icon={<FcGoogle className="w-6 h-6" />}
+              onClick={() => handleSocialLogin("google")}
+            >
               Continue with Google
             </Button>
 
-            <Button variant="secondary" icon={<FaGithub className="w-6 h-6" />}>
+            <Button
+              variant="secondary"
+              icon={<FaGithub className="w-6 h-6" />}
+              onClick={() => handleSocialLogin("github")}
+            >
               Continue with GitHub
             </Button>
           </div>
+
+          <Link
+            to="/forgot-password"
+            className="block-text-center text-base text-gray-600 hover:text-pink-500 transidion-colors mt-8"
+          >
+            Forgot password?
+          </Link>
         </div>
 
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl px-12 py-8 text-center">

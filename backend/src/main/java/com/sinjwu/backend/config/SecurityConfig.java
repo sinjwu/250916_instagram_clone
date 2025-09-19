@@ -1,6 +1,7 @@
 package com.sinjwu.backend.config;
 
-import com.sinjwu.backend.service.JwtAuthenticationFilter;
+import com.sinjwu.backend.security.OAuth2SuccessHandler;
+import com.sinjwu.backend.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     @Value("${frontend.url}")
     private String frontendUrl;
     @Bean
@@ -41,6 +43,7 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
+                .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
