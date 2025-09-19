@@ -42,6 +42,12 @@ const Login = () => {
     });
   };
 
+  const handleSocialLogin = (provider) => {
+    window.location.href = `${
+      import.meta.env.VITE_API_URL
+    }/oauth2/authorization/${provider}`;
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-purple-400 via-pink-500 to-grange-400">
       <div className="max-w-[420px] space-y-6 my-12">
