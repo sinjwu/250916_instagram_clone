@@ -89,7 +89,7 @@ const Login = () => {
           </form>
 
           {error && (
-            <p className="text-red-500 text-xs text-center mt-4">error</p>
+            <p className="text-red-500 text-xs text-center mt-4">{error}</p>
           )}
 
           <div className="flex items-center my-8">
@@ -118,7 +118,7 @@ const Login = () => {
 
           <Link
             to="/forgot-password"
-            className="block-text-center text-base text-gray-600 hover:text-pink-500 transidion-colors mt-8"
+            className="block text-center text-base text-gray-600 hover:text-pink-500 transition-colors mt-8"
           >
             Forgot password?
           </Link>

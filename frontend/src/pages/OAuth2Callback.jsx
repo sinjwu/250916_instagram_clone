@@ -23,7 +23,7 @@ const OAuth2Callback = () => {
 
       try {
         const payload = JSON.parse(atob(token.split(".")[1]));
-        const uer = {
+        const user = {
           id: payload.id,
           email: payload.email,
           username: payload.username,
@@ -32,7 +32,7 @@ const OAuth2Callback = () => {
           bio: payload.bio || null,
         };
 
-        localStorage.setITem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
 
         setAuth({
           user,
