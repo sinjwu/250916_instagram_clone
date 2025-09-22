@@ -13,8 +13,6 @@ const PostList = () => {
     loadPosts();
   }, []);
 
-  useEffect(() => console.log(posts), [posts]);
-
   return (
     <div className="space-y-4">
       {(Array.isArray(posts) ? posts : []).map((post) => (

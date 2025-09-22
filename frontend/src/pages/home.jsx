@@ -27,7 +27,10 @@ const Home = () => {
               Instagram
             </h1>
             <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-black transition-colors">
+              <button
+                className="text-gray-700 hover:text-black transition-colors"
+                onClick={() => setShowCreatePost(true)}
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
