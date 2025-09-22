@@ -22,6 +22,7 @@ public class PostResponse {
     private LocalDateTime updatedAt;
     @JsonProperty("isOwner")
     private boolean isOwner;
+
     public static PostResponse fromEntity(Post post) {
         return PostResponse.builder()
                 .id(post.getId())

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiUser } from "react-cons/fi";
+import { FiUser } from "react-icons/fi";
 
 const SIZES = {
   "extra-small": { class: "w-7 h-7", icon: 14 },
@@ -21,7 +21,6 @@ const Avatar = ({
   const sizeConfig = SIZES[size];
 
   const borderClass = showBorder ? `ring-2 ring-${borderColor}` : "";
-
   const showImage = user?.profileImageUrl && !imageError;
 
   return (

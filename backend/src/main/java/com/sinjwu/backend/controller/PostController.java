@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+
     @PostMapping
     public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequest request) {
         PostResponse response = postService.createPost(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @GetMapping
     public ResponseEntity<Page<PostResponse>> getAllPosts(
             @RequestParam(defaultValue = "0") int page,
@@ -30,5 +32,14 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, size);
         Page<PostResponse> posts = postService.getAllPosts(pageable);
         return ResponseEntity.ok(posts);
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostResponse> updatePost(
+            @PathVariable Long postId,
+            @Valid @RequestBody PostRequest request
+    ) {
+        PostResponse response = postService.updatePost(postId, request);
+        return ResponseEntity.ok(response);
     }
 }

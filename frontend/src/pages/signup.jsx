@@ -43,7 +43,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-purple-400 via-pink-500 to-grange-400">
-      <div className="max-w-[420px] space-y-6">
+      <div className="max-w-[420px] space-y-6 my-12">
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl px-12 py-14">
           <h1 className="text-center mb-6">
             <span className="text-5xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent">
@@ -80,6 +80,7 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
+
             <Input
               name="fullName"
               placeholder="Full Name"
@@ -87,6 +88,7 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
+
             <Input
               name="username"
               placeholder="Username"
@@ -94,6 +96,7 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
+
             <Input
               type="password"
               name="password"

@@ -17,6 +17,7 @@ public class UserDto {
     private String fullName;
     private String bio;
     private String profileImageUrl;
+
     public static UserDto fromEntity(User user) {
         return UserDto.builder()
                 .id(user.getId())

@@ -20,17 +20,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
     public AuthResponse register(RegisterRequest request) {
         if(userRepository.existsByUsername(request.getUsername())) {
             throw new UserAlreadyExistsException("Email already exists");
         }
+
         if(userRepository.existsByEmail(request.getEmail())) {
             throw new UserAlreadyExistsException("Email already exists");
         }
+
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -38,29 +42,37 @@ public class AuthService {
                 .fullName(request.getFullName())
                 .provider(AuthProvider.LOCAL)
                 .build();
+
         user = userRepository.save(user);
+
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+
         return AuthResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .user(UserDto.fromEntity(user))
                 .build();
     }
+
     public AuthResponse authenticate(AuthRequest request) {
         try {
             String loginId = request.getEmail() != null ? request.getEmail() : request.getUsername();
+
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginId,
                             request.getPassword()
                     )
             );
+
             User user = userRepository.findByEmail(loginId)
                     .or(() -> userRepository.findByUsername(loginId))
                     .orElseThrow(() -> new AuthenticationException("Authentication failed"));
+
             String jwtToken = jwtService.generateToken(user);
             String refreshToken = jwtService.generateRefreshToken(user);
+
             return AuthResponse.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
