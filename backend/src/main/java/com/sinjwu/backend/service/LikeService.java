@@ -38,7 +38,22 @@ public class LikeService {
                     .post(post)
                     .build();
             likeRepository.save(like);
-            return false;
+            return true;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Long getLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isLikedByCurrentUser(Long postId) {
+        User currentUser = authenticationService.getCurrentUser();
+
+        Post post = postRepository.findByIdAndNotDeleted(postId)
+                .orElseThrow(() -> new BadRequestException("Post not found"));
+
+        return likeRepository.existsByUserAndPost(currentUser, post);
     }
 }

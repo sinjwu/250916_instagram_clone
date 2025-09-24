@@ -3,10 +3,7 @@ package com.sinjwu.backend.controller;
 import com.sinjwu.backend.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/likes")
@@ -18,5 +15,15 @@ public class LikeController {
     @PostMapping("/{postId}")
     private ResponseEntity<Boolean> toggleLike(@PathVariable Long postId) {
         return ResponseEntity.ok(likeService.toggleLike(postId));
+    }
+
+    @GetMapping("/count/{postId}")
+    public ResponseEntity<Long> countLike(@PathVariable Long postId) {
+        return ResponseEntity.ok(likeService.getLikeCount(postId));
+    }
+
+    @GetMapping("/is-liked/{postId}")
+    public ResponseEntity<Boolean> isLikedByMe(@PathVariable Long postId) {
+        return ResponseEntity.ok(likeService.isLikedByCurrentUser(postId));
     }
 }
