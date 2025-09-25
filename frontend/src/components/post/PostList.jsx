@@ -17,7 +17,7 @@ const PostList = () => {
 
   return (
     <div className="space-y-4">
-      {posts.map((post) => (
+      {(Array.isArray(posts) ? posts : []).map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
     </div>
