@@ -2,10 +2,7 @@ package com.sinjwu.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sinjwu.backend.entity.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostResponse {
-    private long id;
+    private Long id;
     private String content;
     private String imageUrl;
     private UserDto user;
@@ -23,6 +20,7 @@ public class PostResponse {
     private Long likeCount;
     private boolean isLiked;
     private Long commentCount;
+    private boolean isBookmarked;
 
     public static PostResponse fromEntity(Post post) {
         return PostResponse.builder()

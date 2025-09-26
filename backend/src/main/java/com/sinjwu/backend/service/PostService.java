@@ -6,6 +6,7 @@ import com.sinjwu.backend.entity.Post;
 import com.sinjwu.backend.entity.User;
 import com.sinjwu.backend.exception.ResourceNotFoundException;
 import com.sinjwu.backend.exception.UnauthorizedException;
+import com.sinjwu.backend.repository.BookmarkRepository;
 import com.sinjwu.backend.repository.CommentRepository;
 import com.sinjwu.backend.repository.LikeRepository;
 import com.sinjwu.backend.repository.PostRepository;
@@ -26,6 +27,7 @@ public class PostService {
     private final AuthenticationService authenticationService;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     public PostResponse createPost(PostRequest request) {
         User currentUser = authenticationService.getCurrentUser();
@@ -50,13 +52,41 @@ public class PostService {
             Long likeCount = likeRepository.countByPostId(post.getId());
             boolean isLiked = likeRepository.existsByUserAndPost(currentUser, post);
             Long commentCount = commentRepository.countByPostId(post.getId());
+            boolean isBookmarked = bookmarkRepository.existsByUserAndPost(currentUser, post);
 
             response.setLikeCount(likeCount);
             response.setLiked(isLiked);
             response.setCommentCount(commentCount);
+            response.setBookmarked(isBookmarked);
 
             return response;
         });
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PostResponse> getUserPosts(Long userId, Pageable pageable) {
+        User currentUser = authenticationService.getCurrentUser();
+        Page<Post> posts = postRepository.findByUserIdAndNotDeleted(userId, pageable);
+        return posts.map(post -> {
+            PostResponse response = PostResponse.fromEntity(post);
+            Long likeCount = likeRepository.countByPostId(post.getId());
+            boolean isLiked = likeRepository.existsByUserAndPost(currentUser, post);
+            Long commentCount = commentRepository.countByPostId(post.getId());
+            boolean isBookmarked = bookmarkRepository.existsByUserAndPost(currentUser, post);
+
+            response.setLikeCount(likeCount);
+            response.setLiked(isLiked);
+            response.setCommentCount(commentCount);
+            response.setBookmarked(isBookmarked);
+
+            return response;
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Long getUserPostCount(Long userId) {
+        authenticationService.getCurrentUser();
+        return postRepository.countByUserIdAndNotDeleted(userId);
     }
 
     public PostResponse updatePost(Long postId, PostRequest request) {

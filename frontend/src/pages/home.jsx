@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import Avatar from "../components/common/Avatar";
 import PostList from "../components/post/PostList";
 import CreatePost from "../components/post/CreatePost";
+import usePostStore from "../store/postStore";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const { user, logout } = useAuthStore();
+  const { posts, fetchPosts } = usePostStore();
 
   const [activeTab, setActiveTab] = useState("home");
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -18,9 +20,17 @@ const Home = () => {
     navigate("/login");
   };
 
+  useEffect(() => {
+    const loadPosts = async () => {
+      fetchPosts();
+    };
+
+    loadPosts();
+  }, [fetchPosts]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center">
-      <div className="bg-red-100 max-w-[470px] w-full relative">
+      <div className="max-w-[470px] w-full relative">
         <header className="bg-white border-b border-gray-300 fixed top-0 max-w-[470px] w-full z-40">
           <div className="flex items-center justify-between px-4 py-4">
             <h1 className="text-3xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent">
@@ -70,7 +80,7 @@ const Home = () => {
 
         <main className="pt-16 pb-20">
           <div className="p-4">
-            <PostList />
+            <PostList posts={posts} />
           </div>
         </main>
 
