@@ -12,6 +12,7 @@ import java.util.Map;
 @RequestMapping("/api/upload")
 @RequiredArgsConstructor
 public class S3Controller {
+
     private final S3Service s3Service;
 
     @PostMapping("/post")
@@ -20,9 +21,9 @@ public class S3Controller {
         return ResponseEntity.ok(Map.of("url", url));
     }
 
-    @GetMapping("/presign")
-    public ResponseEntity<String> getPresignedUrl(@RequestParam String url) {
-        String presignedUrl = s3Service.generatePresignedUrl(url, 1);
-        return ResponseEntity.ok(presignedUrl);
+    @GetMapping("/profile")
+    public ResponseEntity<Map<String, String>> uploadProfileImage(@RequestParam("file") MultipartFile file) {
+        String url = s3Service.uploadFile(file, "bbbbbb/profile");
+        return ResponseEntity.ok(Map.of("url", url));
     }
 }
